@@ -3,29 +3,39 @@ https://leetcode.com/problems/count-ways-to-build-rooms-in-an-ant-colony
 """
 
 
-import collections
 import math
+
+
+MOD = 10**9 + 7
 
 
 class Solution:
     def waysToBuildRooms(self, prevRoom: list[int]) -> int:
-        edges = collections.defaultdict(list)
-        MOD = 10 ** 9 + 7
+        n = len(prevRoom)
+        edges = [[] for _ in range(n)]
+        for i in range(1, n):
+            edges[prevRoom[i]].append(i)
 
-        for index, value in enumerate(prevRoom):
-            edges[value].append(index)
+        memo = {}
 
-        def find_ways(u):
-            if not edges[u]:
-                return 1, 1
-            res, left = 1, 0
-            for v in edges[u]:
-                tmp, right = find_ways(v)
-                res = (res * tmp * math.comb(left+right, right)) % MOD
-                left += right
-            return res, left + 1
+        def dfs(node):
+            if node in memo:
+                return memo[node]
 
-        return find_ways(0)[0]
+            total_ways = 1
+            total_size = 0
+            for child in edges[node]:
+                child_ways, child_size = dfs(child)
+                total_ways = total_ways * child_ways % MOD
+                total_ways = total_ways * math.comb(
+                        total_size + child_size, child_size) % MOD
+                total_size += child_size
+
+            memo[node] = (total_ways, total_size + 1)
+            return memo[node]
+
+        result, _ = dfs(0)
+        return result % MOD
 
 
 def test(prev_room):
