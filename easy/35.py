@@ -5,22 +5,16 @@ https://leetcode.com/problems/search-insert-position/
 
 class Solution:
     def searchInsert(self, nums: list[int], target: int) -> int:
-        if not nums:
-            return 0
-        first = 0
-        last = len(nums) - 1
-        middle = first + (last - first) // 2
-        while first <= last:
-            middle = first + (last - first) // 2
-            if target == nums[middle]:
+        start, end = 0, len(nums) - 1
+        while start <= end:
+            middle = start + (end - start) // 2
+            if nums[middle] == target:
                 return middle
-            if target < nums[middle]:
-                last = middle - 1
+            elif nums[middle] > target:
+                end = middle - 1
             else:
-                first = middle + 1
-        if target < nums[middle]:
-            return middle
-        return middle + 1
+                start = middle + 1
+        return start
 
 
 def test(nums, target):
@@ -31,4 +25,3 @@ test([1, 3, 5, 6], 5)
 test([1, 3, 5, 6], 2)
 test([1, 3, 5, 6], 7)
 test([], 7)
-test(None, 7)
