@@ -42,3 +42,28 @@ class Solution:
 
 def test(head: Optional[ListNode], root: Optional[TreeNode]):
     print(Solution().isSubPath(head, root))
+
+
+test(
+    ListNode(4, ListNode(2, ListNode(8))),
+    TreeNode(
+        1,
+        TreeNode(4, right=TreeNode(2, TreeNode(1))),
+        TreeNode(4, TreeNode(2, TreeNode(6), TreeNode(8, TreeNode(1),
+                                                      TreeNode(3))))))
+test(
+    ListNode(1, ListNode(4, ListNode(2, ListNode(6)))),
+    TreeNode(
+        1,
+        TreeNode(4, right=TreeNode(2, TreeNode(1))),
+        TreeNode(4, TreeNode(2, TreeNode(6), TreeNode(8, TreeNode(1),
+                                                      TreeNode(3))))))
+test(
+    ListNode(1, ListNode(4, ListNode(2, ListNode(6, ListNode(8))))),
+    TreeNode(
+        1,
+        TreeNode(4, right=TreeNode(2, TreeNode(1))),
+        TreeNode(4, TreeNode(2, TreeNode(6), TreeNode(8, TreeNode(1),
+                                                      TreeNode(3))))))
+test(ListNode(2, ListNode(2, ListNode(1))),
+     TreeNode(2, right=TreeNode(2, right=TreeNode(2, TreeNode(1)))))
